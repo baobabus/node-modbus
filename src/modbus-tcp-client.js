@@ -131,11 +131,18 @@ module.exports = stampit()
         let pdu = buffer.slice(7, 7 + len - 1)
         this.log.debug('PDU extracted')
 
+        buffer = buffer.slice(pdu.length + 7, buffer.length)
+
+        // skip over spurious response cosuming the data
+        if (id !== currentRequestId) {
+          this.log.debug('current mbap contains spurious request id.')
+          continue
+        }
+
         // emit data event and let the
         // listener handle the pdu
         this.emit('data', pdu)
 
-        buffer = buffer.slice(pdu.length + 7, buffer.length)
       }
     }.bind(this)
 
