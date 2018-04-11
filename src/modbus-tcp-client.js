@@ -133,7 +133,7 @@ module.exports = stampit()
 
         buffer = buffer.slice(pdu.length + 7, buffer.length)
 
-        // skip over spurious response cosuming the data
+        // skip over spurious response consuming the data
         if (id !== currentRequestId) {
           this.log.debug('current mbap contains spurious request id.')
           continue
@@ -142,7 +142,6 @@ module.exports = stampit()
         // emit data event and let the
         // listener handle the pdu
         this.emit('data', pdu)
-
       }
     }.bind(this)
 
